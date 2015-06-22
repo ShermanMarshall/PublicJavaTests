@@ -5,6 +5,7 @@ import java.util.*;
 as well as for hardware/vendor information */
 public class GetIPs {
 	public static void main (String[] args) throws UnknownHostException, SocketException {
+		//System.out.println("Host address is: " + InetAddress.getLocalHost().getHostAddress());
 		Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
 		for (int x = 1; nis.hasMoreElements(); x++) {
 			NetworkInterface ni = nis.nextElement();
@@ -14,10 +15,8 @@ public class GetIPs {
 				continue;
 
 			System.out.println(ni.getDisplayName());			
-			Enumeration<InetAddress> addresses = ni.getInetAddresses();
-			for ( ; addresses.hasMoreElements(); ) {
-				InetAddress address = addresses.nextElement();
-				System.out.println(Integer.toString(x) + ": " + address.getHostAddress());
+			for (InetAddress ia : Collections.list(ni.getInetAddresses())) {
+				System.out.println(Integer.toString(x) + ": " + ia.getHostAddress());
 			}
 		}
 	}
