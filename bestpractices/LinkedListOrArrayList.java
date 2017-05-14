@@ -44,7 +44,7 @@ public class LinkedListOrArrayList {
 		try {
 		   sizeFactor = Integer.parseInt(args[0]);
 		} catch (NumberFormatException nfe) {
-		   System.out.println("You didn't supply an integer dumdum");
+		   System.out.println("You didn't supply an integer...");
 		}
 	}
 
