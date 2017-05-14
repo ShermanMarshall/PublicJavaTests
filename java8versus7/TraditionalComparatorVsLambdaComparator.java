@@ -38,13 +38,23 @@ import java.util.UUID;
  */
 public class TraditionalComparatorVsLambdaComparator {
     static int sizeFactor = 100;
-    
+/*
+    final static List<String> set1 = new ArrayList();
+    final static List<String> set2 = new ArrayList();
+
+*/
+	
+	final static double average = 0.0;
+
     public static void main(String args[]){
         
       if (args.length > 0) {
           sizeFactor = Integer.parseInt(args[0]);
       }
 
+	long time = 0;
+
+	for (int x = 0; x < 100; x++ ) {
       //Declare arrays with expected size to avoid resizing memory allocation and gc activity
       List<String> names1 = new ArrayList<String>(sizeFactor);
       
@@ -57,6 +67,11 @@ public class TraditionalComparatorVsLambdaComparator {
       System.out.println("Sort using Java 7 syntax: ");
       long num = System.currentTimeMillis();
       sortUsingJava7(names1); 
+      
+      time = System.currentTimeMillis() - num;
+
+	average = ((average * (x+1)) + (time))/(x+2);
+
       System.out.println(Long.toString(System.currentTimeMillis() - num));
       //System.out.println(names1);
       
@@ -75,6 +90,7 @@ public class TraditionalComparatorVsLambdaComparator {
       sortUsingJava8(names2);
       System.out.println(Long.toString(System.currentTimeMillis() - num));
       //System.out.println(names2);
+	}
    }
 
    private static void sortUsingJava7(List<String> names){
