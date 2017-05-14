@@ -16,6 +16,8 @@ import java.util.UUID;
  * 
  * I tried several scale factors, and the trend is that the larger the scale factor, the better
  * the Lambda version performed; however, in no cases was the Lambda-based Comparator superior.
+ * One can recognize this because the size of the array is a constant between the two algorithm
+ * implementations, where the compile time of their respective instructions is not.
  * 
  * The following table summarizes my results (in ms):
  * 
@@ -34,76 +36,75 @@ import java.util.UUID;
  * testing Java code; however, I believe the results that I have taken in the following tests are accurate,
  * and I can promise that they will be revisited upon completing the book.
  * 
+ * [edit]
+ * I still haven't finished the book (life is hectic), though, I wanted to revisit this and provide a more
+ * iterative test, without the System.gc() call. Many people remarked that of all things, that call
+ * could obfuscate results, given the unpredictability of the JVM garbage collection activity. The results
+ * still stand however, somewhat unsurprisingly, from my perspective. 
+ * 
  * @author  Sherman Marshall
  */
 public class TraditionalComparatorVsLambdaComparator {
-    static int sizeFactor = 100;
-/*
-    final static List<String> set1 = new ArrayList();
-    final static List<String> set2 = new ArrayList();
-
-*/
-	
-	final static double average = 0.0;
-
-    public static void main(String args[]){
-        
+    static int sizeFactor = 1000000;
+    static Comparator comp = new Comparator<String>() {
+        @Override
+        public int compare(String s1, String s2) {
+           return s1.compareTo(s2);
+        }
+    };
+    
+    public static void main(String args[]) {
       if (args.length > 0) {
           sizeFactor = Integer.parseInt(args[0]);
       }
-
-	long time = 0;
-
-	for (int x = 0; x < 100; x++ ) {
+      
+      long tradTime = 0, lambdaTime = 0, holder = 0;
+      
       //Declare arrays with expected size to avoid resizing memory allocation and gc activity
-      List<String> names1 = new ArrayList<String>(sizeFactor);
-      
-      //Add {sizeFactor} elements to names1
+      List<String> traditional = new ArrayList<String>(sizeFactor);
+
+      //Add {sizeFactor} elements to traditional
       for (int x = 0; x < sizeFactor; x++) {
-          names1.add(UUID.randomUUID().toString());
+          traditional.add(UUID.randomUUID().toString());
       }
       
-      //Sort names1, and compute time to complete
-      System.out.println("Sort using Java 7 syntax: ");
-      long num = System.currentTimeMillis();
-      sortUsingJava7(names1); 
-      
-      time = System.currentTimeMillis() - num;
-
-	average = ((average * (x+1)) + (time))/(x+2);
-
-      System.out.println(Long.toString(System.currentTimeMillis() - num));
-      //System.out.println(names1);
-      
-      //Remove reference to unnecessary object, and begin garbage collection to free memory
-      names1 = null;
-      System.gc();
-      
-      //Sort names2, and compute time to complete
-      List<String> names2 = new ArrayList<String>(sizeFactor);
+      //Sort lambda, and compute time to complete
+      List<String> lambda = new ArrayList<String>(sizeFactor);
       for (int x = 0; x< sizeFactor; x++) {
-          names2.add(UUID.randomUUID().toString());
+          lambda.add(UUID.randomUUID().toString());
       }
       
-      System.out.println("Sort using Java 8 syntax: ");      
-      num = System.currentTimeMillis();
-      sortUsingJava8(names2);
-      System.out.println(Long.toString(System.currentTimeMillis() - num));
-      //System.out.println(names2);
-	}
+      for (int xx = 0; xx < 100; xx++ ) {
+        //Sort traditional, and compute time to complete
+        System.out.println("Sort using Java 7 syntax: ");
+        long num = System.currentTimeMillis();
+        sortUsingJava7(traditional); 
+        holder = System.currentTimeMillis() - num;
+        System.out.println(Long.toString(holder));
+        //System.out.println(traditional);
+        
+        tradTime += holder;
+
+        System.out.println("Sort using Java 8 syntax: ");      
+        num = System.currentTimeMillis();
+        sortUsingJava8(lambda);
+        holder = System.currentTimeMillis() - num;
+        System.out.println(Long.toString(holder));
+        //System.out.println(lambda);
+        
+        lambdaTime += holder;
+      }
+      
+      System.out.println("Avg time for traditional: " + Double.toString((double) tradTime / (double) 100));
+      System.out.println("Avg time for lambda: " + Double.toString((double) lambdaTime / (double) 100));
    }
 
    private static void sortUsingJava7(List<String> names){
       //sort using java 7
-      Collections.sort(names, new Comparator<String>() {
-         @Override
-         public int compare(String s1, String s2) {
-            return s1.compareTo(s2);
-         }
-      });
+      Collections.sort(names, comp);
    }
 
-   private static void sortUsingJava8(List<String> names){
+   private static void sortUsingJava8(List<String> names) {
       //sort using java 8
       Collections.sort(names, (s1, s2) ->  s1.compareTo(s2));      
    }
