@@ -14,8 +14,12 @@ import java.util.UUID;
  * ArrayLists are also commonly used for storing data. Given their internal representation as
  * Arrays, they are faster for performing get operations (I'm not an assembly wiz, but I think
  * the reason is because of the pointer arithmetic arrays permit--foreknowledge of the array 
- * offset means less instructions to determine the location of the memory to be accessed/operated on)
- 
+ * offset means less instructions to determine the location of the memory to be accessed/operated on).
+ * They sometimes suffer, however, from underutilization of memory, due to the way the array is resized.
+ * As values are added, the size of the array grows, and if it grows beyond its current limits, the data
+ * must be copied into a new, larger, contiguous space. This relationship between Collection and data
+ * is greater than node-for-object, as is the case with LinkedLists.
+ *
  * This test shows LinkedLists perform worse under general circumstances than ArrayLists. The benefits
  * of more efficient memory usage without array resizing are lost in accessing data. Basically, if you
  * can afford the memory--which you can, because this is 2017--you should be using an ArrayList.
@@ -26,7 +30,7 @@ import java.util.UUID;
  * old values into a new contiguous memory space. Remarkably, however, this does not appear to effect
  * the time it takes the ArrayList to complete. I suspect something is going on within the JVM to 
  * optimize the efficacy of the ArrayList here, because this completely dismisses understanding of how
- * it operates.
+ * ArrayLists operate.
  * 
  * @author Sherman Marshall
  */
@@ -36,6 +40,14 @@ public class LinkedListOrArrayList {
     public static void main(String...args) {
         long llAddTime = 0, alAddTime = 0, llGetTime = 0, alGetTime = 0, holder;
         
+        if (args.length > 0) { 
+		try {
+		   sizeFactor = Integer.parseInt(args[0]);
+		} catch (NumberFormatException nfe) {
+		   System.out.println("You didn't supply an integer dumdum");
+		}
+	}
+
         for (int xx = 0; xx < 100; xx++) {
             List<String> ll = new LinkedList();
 
