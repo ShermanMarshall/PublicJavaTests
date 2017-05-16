@@ -42,6 +42,14 @@ import java.util.UUID;
  * could obfuscate results, given the unpredictability of the JVM garbage collection activity. The results
  * still stand however, somewhat unsurprisingly, from my perspective. 
  * 
+ * [edit-2]
+ * After running the iterative test (multiple times) on some occasions, the Lambda implementation wins!
+ * The circumstances under which it wins escape me--and likely fall under the arcana of the JVM mentioned above;
+ * however, when using a large sizeFactor, it seems that the initial time to run the code is very time-consuming
+ * due to JIT compilation (for a Oracle HotSpot JVM)--yet, subsequent runs are very quick. It appears that the results
+ * are skewed as a result. The initial run for Lambda comparison is very slow, due to its compilation; however, subsequent 
+ * runs are very fast
+ * 
  * @author  Sherman Marshall
  */
 public class TraditionalComparatorVsLambdaComparator {
