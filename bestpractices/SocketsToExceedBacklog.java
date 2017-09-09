@@ -116,8 +116,7 @@ public class SocketsToExceedBacklog  {
 }
 /**
  *               But, the reason for it escapes me a bit.
- *               If you run the following code--and its pair server-code in
- *               BacklogExceeded.java--you will see a couple of interesting exceptions
+ *               If you run the provided code you will see a couple of interesting exceptions
  *               reported: Connection reset, and Broken Pipe. These exceptions correspond
  *               to RST messages being sent from TCP connections, and I think IO failures;
  *               neither of which are in the programmer's capability of control. The RST
