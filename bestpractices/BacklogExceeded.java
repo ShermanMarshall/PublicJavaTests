@@ -15,7 +15,7 @@ import java.net.SocketException;
  */
 public class BacklogExceeded {
     public static int PORT = 27011;
-    public static int BACKLOG = 2;
+    public static int BACKLOG = 200;
     public static boolean DO_NOT_ESCAPE = true;
     public static String FILE_ROOT = "BacklogTest/";
     public static String OTHER_FILE_ROOT = "RequestData/";
