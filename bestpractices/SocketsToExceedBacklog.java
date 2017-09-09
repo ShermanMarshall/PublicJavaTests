@@ -98,9 +98,6 @@ public class SocketsToExceedBacklog  {
             }
         }
         
-        
-        Collections.sort(expectedFileNames);
-        
         for (String s : expectedFileNames) {
             new File("RequestData/" + s).createNewFile();
         }
@@ -129,5 +126,6 @@ public class SocketsToExceedBacklog  {
  *               the TCP protocol's fault tolerance, and connection guarantee means these 
  *               RST messages will keep getting resent, the problem is that the server gets
  *               killed early... but, that also raises the issue of how does application
- *               logic operate on 
+ *               logic operate when the socket has not been sent...
+ *               The amount of "just works" hardware and software we rely on is incredible
  */
