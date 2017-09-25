@@ -53,7 +53,7 @@ import java.util.UUID;
  * @author  Sherman Marshall
  */
 public class TraditionalComparatorVsLambdaComparator {
-    static int sizeFactor = 1000000;
+    static int sizeFactor = 100;
     static Comparator comp = new Comparator<String>() {
         @Override
         public int compare(String s1, String s2) {
