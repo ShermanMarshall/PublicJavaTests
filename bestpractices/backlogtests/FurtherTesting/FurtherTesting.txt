@@ -10,7 +10,7 @@ The test logic follows:
 	Number of iterations	Number of requests	Number of created files		Number of reported failures
 	10			2500			25000				0
 	10			2500			25000				0
-	5			2500			7500				0
+	5			2500			12500				0
 	5			5000			25000				0
 
 These conditions are meant to imitate production environments, where servers can be expected to deal with a number of requests from myriad users every second. The fear, was that given a number of requests, greater than the server's capacity to handle them in some unit of time, requests would eventually become lost due to the server's inability to handle them before new requests came in--the backlog queue of (TCP) connections, would be overrun, and there would be loss of data.
