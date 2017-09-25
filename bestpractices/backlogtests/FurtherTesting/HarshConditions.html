@@ -1,0 +1,42 @@
+<html>
+<body>
+<h2>Backlog Test</h2>
+<button id='begin'>Start</button>
+</body>
+<script src='vendor/jquery.js'></script>
+<script>
+$(document).ready(function() {
+	var button = $('#begin');
+
+	var numIterations = 10;
+	var numRequests = 2500;
+	
+	button.click(function() {
+		var successObj = {};
+		var failureObj = {};
+		alert('starting ' + numIterations + ' tests\nWith ' + numRequests + ' requests each');
+		for (var x = 0; x < numIterations; x++) {
+			for (var y = 0; y < numRequests; y++) {
+				var path = x + '_' + y;
+				$.ajax({
+					type: 'GET',
+					url: 'resources/root/endpoint/' + path,
+					data: undefined,
+					success: function(thePath) {
+						successObj[thePath] = thePath;
+					},
+					error: function() { 
+						console.log('request failed for path: ' + path);
+						failureObj[String(path)] = String(path);
+					}
+				});
+			}
+		}
+		setTimeout(function() {
+			console.log(Object.keys(successObj).length);
+			console.log(Object.keys(failureObj).length);
+		}, 5000);
+ 	});
+});
+</script>
+</html>
