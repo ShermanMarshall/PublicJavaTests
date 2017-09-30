@@ -2,7 +2,7 @@ After further testing of the backlog issue, it seems as though the testing envir
 
 The test logic follows:
 	- For a number of iterations (10 is the default, unmodified value), 2500 requests will be sent to different paths of an HTTP host endpoint on a Java EE server.
-	- Each request will cause a unique file to be created and stored on the server, as a persistent way of verifing a successful request.
+	- Each request will cause a unique file to be created and stored on the server, as a persistent way of verifing a successful request (this was a simple way of testing at the time, allowing for ease of counting and verification, however, I wonder whether concerns about the capability of the host OS managing that many unique file-creation requests skews results).
 	- The requests will be performed iteratively, with effectively no delay in between iterations--the goal is to overload the server's resources, consistently, and
 	a continuous stream of requests is thought to be the best way to imitate production environments.
 	
