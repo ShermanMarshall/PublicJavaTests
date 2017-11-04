@@ -16,7 +16,6 @@ import java.net.SocketException;
 public class BacklogExceeded {
     public static int PORT = 27011;
     public static int BACKLOG = 200;
-    public static boolean DO_NOT_ESCAPE = true;
     public static String FILE_ROOT = "BacklogTest/";
     public static String OTHER_FILE_ROOT = "RequestData/";
     public static String TERMINATE_MSG = "EXIT";
@@ -31,6 +30,7 @@ public class BacklogExceeded {
             requestData.mkdir();
         }
     }
+
     public static void main (String...args) throws IOException {
         final ServerSocket ss = new ServerSocket(PORT, BACKLOG, InetAddress.getByName("localhost"));
         
@@ -50,13 +50,11 @@ public class BacklogExceeded {
                         try {
                             InputStream is = socket.getInputStream();
 
-
                             while (( num = is.read()) != -1) {
                                 sb.append((char)(byte) num);
                             }
 
-                            if (sb.toString().equals(FILE_ROOT + TERMINATE_MSG)) {
-                                DO_NOT_ESCAPE = false;
+                            if (sb.toString().equals(TERMINATE_MSG)) {
                                 System.out.println("exiting");
                                 ss.close();
                             } else {

@@ -28,8 +28,8 @@ import java.util.UUID;
  *                  Run BacklogExceeded.java
  *                  Run SocketsToExceedBacklog.java
  *                      wait...
- *                  ls BacklogTest | wc -l
  *                  ls RequestData | wc -l
+ *	 	    ls BacklogTest | wc -l
  * 
  *                  Suggest that I am on to something...
  * 
@@ -55,6 +55,7 @@ public class SocketsToExceedBacklog  {
     public static int NUMBER_OF_TESTS = 10;
     public static int SHORT_WAIT = 500;
     public static int LONG_WAIT = 2000;
+    public static String TERMINATE_MSG = "BacklogTests/EXIT";
     
     public static void main (String...args) throws IOException {
         Thread[] threadPool = new Thread[THREAD_POOL_SIZE];
@@ -106,7 +107,7 @@ public class SocketsToExceedBacklog  {
         try {
             
             Socket terminate = new Socket(InetAddress.getByName("localhost"), 27011);
-            terminate.getOutputStream().write("EXIT".getBytes());
+            terminate.getOutputStream().write(TERMINATE_MSG.getBytes());
             
             terminate.close();
         } catch (IOException ioe) {
@@ -126,6 +127,6 @@ public class SocketsToExceedBacklog  {
  *               the TCP protocol's fault tolerance, and connection guarantee means these 
  *               RST messages will keep getting resent, the problem is that the server gets
  *               killed early... but, that also raises the issue of how does application
- *               logic operate when the socket has not been sent...
+ *               logic operate when the socket has not connected...
  *               The amount of "just works" hardware and software we rely on is incredible
  */
