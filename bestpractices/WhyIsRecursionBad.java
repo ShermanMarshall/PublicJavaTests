@@ -32,8 +32,8 @@ public class WhyIsRecursionBad {
 	}
 	
 	/**
-	 * Function increments counter until the condition is satisfied. Iteration essentially guarantees (other concerns may arise, like OOM issues)
-	 * that the flow of the program won't be interrupted, however.
+	 * Function increments counter until the condition is satisfied. Iteration essentially guarantees that the flow of the program 
+	 * won't be interrupted, however, other concerns may arise, like OOM issues.
 	 */
 	public static void iterationIsGood() {
 		value = Long.MAX_VALUE;
