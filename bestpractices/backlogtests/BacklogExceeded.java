@@ -18,7 +18,7 @@ public class BacklogExceeded {
     public static int BACKLOG = 200;
     public static String FILE_ROOT = "BacklogTest/";
     public static String OTHER_FILE_ROOT = "RequestData/";
-    public static String TERMINATE_MSG = "EXIT";
+    public static String TERMINATE_MSG = FILE_ROOT + "EXIT";
     
     public static void createDirs() throws IOException {
         File backlogTests = new File(FILE_ROOT);
