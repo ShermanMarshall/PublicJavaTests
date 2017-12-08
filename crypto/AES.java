@@ -21,6 +21,7 @@ import sun.misc.BASE64Encoder;
  * @description: Class containing an encryption example using JCE
  */
 public class AES {
+    private static final int KEY_SIZE_128 = 128;
     
     public static void main(String[] args) {
 
@@ -35,7 +36,7 @@ public class AES {
 
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-            keyGen.init(128);
+            keyGen.init(KEY_SIZE_128);
             SecretKey secretKey = keyGen.generateKey();
 
             final int AES_KEYLENGTH = 128;	
