@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * @class:       Hashes
- * @description: Class containing some of the JCE utilities implementing contemporary crypto standards
+ * @description: Class containing some of the JCE utilities implementing contemporary crypto standards (SHA-1 & SHA-256)
  */
 public class Hashes {
     
