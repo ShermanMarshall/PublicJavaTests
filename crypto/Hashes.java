@@ -17,7 +17,8 @@ public class Hashes {
         byte[] output;
         
         byte[] digest = messageDigest.digest(input);
-        
+
+ 	System.out.println("Testing: " + hashType);       
         System.out.println(new String(input));
         System.out.println(new String(digest));
         System.out.println("Length: " + digest.length);
