@@ -5,10 +5,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @class:       Crypto
+ * @class:       Hashes
  * @description: Class containing some of the JCE utilities implementing contemporary crypto standards
  */
-public class Crypto {
+public class Hashes {
     
     public static void testHash(String hashType) throws NoSuchAlgorithmException, UnsupportedEncodingException  {
         MessageDigest messageDigest = MessageDigest.getInstance(hashType);
