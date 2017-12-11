@@ -39,7 +39,7 @@ public class NIOForFiles {
 		if (val == 0 || val == 27) {
 		    output.append("\n");
 		} else {
-		    output.append((char) val);
+		    output.append((char) (val + 48));
 		}   
 		if ((num % (int) (Math.pow(2, 27))) == 0) {
 		    bw.write(output.toString());
