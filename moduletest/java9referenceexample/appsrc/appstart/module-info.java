@@ -1,3 +1,0 @@
-module appstart {
-	requires appfuncs;
-}
