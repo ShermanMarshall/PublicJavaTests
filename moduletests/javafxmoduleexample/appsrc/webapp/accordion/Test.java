@@ -14,9 +14,11 @@ public class Test extends Application {
 	final WebView browser = new WebView();
 	final WebEngine webEngine = browser.getEngine();
 
+	static String url;
+
 	@Override
 	public void start(Stage primaryStage) {
-		webEngine.load("file:///Users/shermanmarshall/Workspace/Github/GLSLIDE/accordion/test.html");
+		webEngine.load(url);
 		
 		StackPane root = new StackPane();
 		
@@ -32,13 +34,6 @@ public class Test extends Application {
 			}
 		});
 
-
-		//Button two = new Button("loadjs");
-		//two.setOnAction(new EventHandler<ActionEvent>() {
-		//	@Override 
-		//	public void handle(ActionEvent a0) {
-						//}
-		//});
 
 		VBox toolbox = new VBox();
 		toolbox.getChildren().add(one);
@@ -58,21 +53,26 @@ public class Test extends Application {
 	}
 
 	public static void main(String...args) {
-		Thread t = new Thread(new Runnable() {
-                        public void run() {
-                                try {
-                                        Thread.sleep(1000);
-                                } catch (InterruptedException ie) {
-                                        System.out.println(ie);
-                                }   
-                                Runtime rt = Runtime.getRuntime();
-                                System.out.println("Free memory: " + rt.freeMemory());
-                                System.out.println("Max memory: " + rt.maxMemory());
-                                System.out.println("Total memory: " + rt.totalMemory());
-                        }   
-                }); 
-                t.start();
-		launch(args);
+		if (args.length > 0) {
+			url = args[0];
+			Thread t = new Thread(new Runnable() {
+				public void run() {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException ie) {
+						System.out.println(ie);
+					}   
+					Runtime rt = Runtime.getRuntime();
+					System.out.println("Free memory: " + rt.freeMemory());
+					System.out.println("Max memory: " + rt.maxMemory());
+					System.out.println("Total memory: " + rt.totalMemory());
+				}   
+			}); 
+			t.start();
+			launch(args);
+		} else {
+			System.out.println("Supply a file to load the webview");
+		}
 	}
 
 	public static class TestApp {
