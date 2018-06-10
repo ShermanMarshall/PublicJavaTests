@@ -20,7 +20,7 @@ public class JFXTest extends Application {
 		StackPane root = new StackPane();
 		root.getChildren().add(browser);
 
-		Scene scene = new Scene(root, 300, 250);
+		Scene scene = new Scene(root, 800, 800);
 
 		primaryStage.setTitle("hello");
 		primaryStage.setScene(scene);
