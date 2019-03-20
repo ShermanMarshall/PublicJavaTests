@@ -7,6 +7,10 @@ import java.io.FileOutputStream;
 import java.io.Console;
 import java.util.Scanner;
 
+/**
+ *
+ * @author owner
+ */
 public class ScanFrom {
     
     public static void main(String...args) throws IOException {
@@ -28,7 +32,7 @@ public class ScanFrom {
         StringBuilder content = new StringBuilder();
 
 	Scanner scan = new Scanner(System.in);
-	bos.write("\nblocking".getBytes());
+	bos.write("\nblocking\n".getBytes());
         bos.flush();
 	do {
 		s = scan.nextLine();

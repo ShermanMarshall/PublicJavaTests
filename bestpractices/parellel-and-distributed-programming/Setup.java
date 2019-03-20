@@ -5,29 +5,30 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Scanner;
 
-public class ScanSetup {
+public class Setup {
     public static void main(String[] args) throws IOException {
         InputStream in = System.in;
         OutputStream out = System.out;
         
-        ProcessBuilder pb = new ProcessBuilder("/Users/shermanmarshall/Workspace/Github/PublicJavaTests/bestpractices/pipes/toFromScript");
-	pb.redirectInput(ProcessBuilder.Redirect.INHERIT);
+        ProcessBuilder pb = new ProcessBuilder("/Users/admin/Workspace/JavaBox/RunArea/toFromScript");
 
         Process p = pb.start();
+        
         InputStream from = p.getInputStream();
-        //OutputStream to = p.getOutputStream();
+        OutputStream to = p.getOutputStream();
         
         Scanner s = new Scanner(in);
         String data = "";
         byte[] back = new byte[1024];
 	int size = 0;
-
 	Scanner fromScan = new Scanner(from);
+
         for (int x = 0; (x < 10); x++) {
-	    //System.out.print("Input: ");
-            //data = s.nextLine();
-            //to.write(data.getBytes());
-	    //System.out.println("You entered: " + data);
+	    System.out.print("Input: ");
+            data = s.nextLine();
+//            to.write(data.getBytes());
+
+	    System.out.println("You entered: " + data);
 
 	    try {
 		Thread.sleep(10);
@@ -39,9 +40,9 @@ public class ScanSetup {
 	    //if (from.available() > 0) {
             //size = from.read(back);
 
-	    data = fromScan.nextLine();
-	    System.out.println(data);
+		data = fromScan.nextLine();
 
+		System.out.println(data);
 	    //No data read
 	    if (size == -1) {
 		try {

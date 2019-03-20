@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FileInputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SeekableByteChannel;
@@ -86,13 +87,40 @@ public class NIOForFiles {
 		System.out.println(ioe);
 	}
     }
+
+    public static String readFileCompletely(String filename) {
+	File file = new File(filename);
+    	long length = file.length();
+	int fileMax = length > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) length, bytesRead;
+
+	StringBuilder sb = new StringBuilder();
+	ByteBuffer buffer = ByteBuffer.allocate(fileMax);
+
+	try (FileChannel fchan = new FileInputStream(filename).getChannel()) {
+		while ((bytesRead = fchan.read(buffer)) > 0) {
+			buffer.rewind();
+			if (bytesRead == fileMax) {
+				sb.append(new String(buffer.array()));
+			} else {
+				byte[] data = new byte[bytesRead];
+				buffer.get(data);
+				sb.append(new String(data));
+			}
+		}
+	} catch (IOException ioe) {
+		System.out.println(ioe);
+	}
+
+	buffer = null;
+	return sb.toString();
+    }
     
-    public static String readFile(String filename) {
+    public static String readFile(String filename, int buffSize) {
         String output = null;
         Path path = null;
         
         try (SeekableByteChannel inputChannel = Files.newByteChannel(Paths.get(filename))) {
-            ByteBuffer buf = ByteBuffer.allocate(1024);
+            ByteBuffer buf = ByteBuffer.allocate(buffSize);
             int bytesRead = 0;
             
             while ((bytesRead = inputChannel.read(buf)) > -1) {
@@ -145,7 +173,7 @@ public class NIOForFiles {
             System.out.println("Reading file with NIO");
 
             long time = System.currentTimeMillis();
- 	    String output = readFile(filename);
+ 	    String output = readFile(filename, 4096);
 
             difference = (((double)System.currentTimeMillis() - time) / 1000.0);
 	    System.out.println("time: " + difference);
@@ -154,7 +182,8 @@ public class NIOForFiles {
             System.out.println("Reading file with Buffered Reader");
             time = System.currentTimeMillis();
 
-            bufferedRead(filename);
+            output = readFile(filename, 4096 * 4096);
+		//bufferedRead(filename);
             difference = (((double)System.currentTimeMillis() - time) / 1000.0);
 	    System.out.println("time: " + difference);
 	    bufferedReadMetrics.add(difference);
@@ -219,7 +248,8 @@ public class NIOForFiles {
     }	
 
     public static void main (String...args) {
-	//testReading();
-	testWriting();
+	testReading();
+	//testWriting();
+	//createGBFile();
     }
 }
