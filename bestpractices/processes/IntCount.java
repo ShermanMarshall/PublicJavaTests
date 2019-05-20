@@ -50,7 +50,7 @@ public class IntCount {
 				output.delete(0, output.length());
 				System.out.println("input complete");
 			}
-		} while(x < (1024 * 1024));
+		} while(x < (1024 * 16));
 
 		os.write("exit".getBytes());
 		os.close();

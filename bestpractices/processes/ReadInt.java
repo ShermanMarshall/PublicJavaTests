@@ -30,12 +30,14 @@ public class ReadInt {
 						System.arraycopy(data, 0, subset, 0, bytesRead);
 						content = new String(subset);
 					}
-					sb.append(content.substring(0, content.length() - 3));
-					if (eot(content)) {
-						pw.println(sb.toString());
-						sb.delete(0, sb.length());
-						pw.flush();
-						System.out.write(new StringBuilder("Wrote to file: " + count++ + " times").toString().getBytes());
+					if (content.length() > 3) {
+						sb.append(content.substring(0, content.length() - 3));
+						if (eot(content)) {
+							pw.println(sb.toString());
+							sb.delete(0, sb.length());
+							pw.flush();
+							System.out.write(new StringBuilder("Wrote to file: " + count++ + " times").toString().getBytes());
+						}
 					}
 				}
 			}

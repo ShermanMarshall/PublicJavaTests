@@ -14,11 +14,9 @@ public class Hashes {
         MessageDigest messageDigest = MessageDigest.getInstance(hashType);
         
         byte[] input = "username1&password1".getBytes("UTF-8");
-        byte[] output;
-        
         byte[] digest = messageDigest.digest(input);
 
- 	System.out.println("Testing: " + hashType);       
+        System.out.println("Testing: " + hashType);
         System.out.println(new String(input));
         System.out.println(new String(digest));
         System.out.println("Length: " + digest.length);

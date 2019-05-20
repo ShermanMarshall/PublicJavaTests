@@ -1,6 +1,5 @@
 package crypto;
 
-import generaltest.*;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +11,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
 import sun.misc.BASE64Encoder;
@@ -37,19 +37,23 @@ public class AES {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(KEY_SIZE_128);
-            SecretKey secretKey = keyGen.generateKey();
+            
+            SecretKey secretKey = new SecretKeySpec("1-Hat3-Pa$$word$".getBytes(), "AES"); // keyGen.generateKey();
+            System.out.println(new String(secretKey.getEncoded()));
 
             final int AES_KEYLENGTH = 128;	
             byte[] iv = new byte[AES_KEYLENGTH / 8];
 
             SecureRandom prng = new SecureRandom();
             prng.nextBytes(iv);
+            
+            iv = "1234567890abcdef".getBytes();
 
             Cipher aesCipherForEncryption = Cipher.getInstance("AES/CBC/PKCS5Padding"); 
 
             aesCipherForEncryption.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(iv));
 
-            strDataToEncrypt = args[0];
+            strDataToEncrypt = "testing12testing"; //args[0];
             byte[] byteDataToEncrypt = strDataToEncrypt.getBytes();
             byte[] byteCipherText = aesCipherForEncryption.doFinal(byteDataToEncrypt);
 
