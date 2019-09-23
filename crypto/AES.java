@@ -1,6 +1,5 @@
 package crypto;
 
-import generaltest.*;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -11,7 +10,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
+import javax.crypto.SecretKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
 import sun.misc.BASE64Encoder;
@@ -35,16 +34,13 @@ public class AES {
         }
 
         try {
-            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-            keyGen.init(KEY_SIZE_128);
-            SecretKey secretKey = keyGen.generateKey();
+            SecretKey secretKey = new SecretKeySpec("PASSWORD", "AES");
 
             final int AES_KEYLENGTH = 128;	
             byte[] iv = new byte[AES_KEYLENGTH / 8];
 
-            SecureRandom prng = new SecureRandom();
-            prng.nextBytes(iv);
-
+            iv = "16character55555".getBytes();
+            
             Cipher aesCipherForEncryption = Cipher.getInstance("AES/CBC/PKCS5Padding"); 
 
             aesCipherForEncryption.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(iv));
@@ -53,8 +49,7 @@ public class AES {
             byte[] byteDataToEncrypt = strDataToEncrypt.getBytes();
             byte[] byteCipherText = aesCipherForEncryption.doFinal(byteDataToEncrypt);
 
-            strCipherText = new BASE64Encoder().encode(byteCipherText);
-            System.out.println("Cipher Text generated using AES is " + strCipherText);
+            System.out.println("Cipher Text generated using AES is " + new String(strCipherText));
 
             Cipher aesCipherForDecryption = Cipher.getInstance("AES/CBC/PKCS5Padding"); 
 

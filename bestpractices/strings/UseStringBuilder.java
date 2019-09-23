@@ -20,7 +20,7 @@ public class UseStringBuilder {
 			return;
 		}
 		for (int iterations = 0, metricCounter = 0; iterations < numIterations; iterations++) {
-			System.out.println("Testing time for String concatenation");
+			//System.out.println("Testing time for String concatenation");
 			start = System.currentTimeMillis();
 			for (int x = 0; x < arraySize; x++) { //Add characters to create the 26 character alphabet
 				for (int xx = 0; xx < 26; xx++) {
@@ -31,7 +31,7 @@ public class UseStringBuilder {
 			stop = System.currentTimeMillis() - start;
 			metrics[metricCounter] = stop;
 			averages[metricCounter++] += stop;
-			System.out.println("Testing time for String building");
+			//System.out.println("Testing time for String building");
 			start = System.currentTimeMillis();
 			for (int x = 0; x < arraySize; x++) {  //Add characters to create the 26 character alphabet
 				for (int xx = 0; xx < 26; xx++) {
@@ -43,7 +43,7 @@ public class UseStringBuilder {
 			metrics[metricCounter] = stop;
 			averages[metricCounter++] += stop;
 
-			System.out.println("Testing time for String buffering");
+			//System.out.println("Testing time for String buffering");
 			start = System.currentTimeMillis();
 			for (int x = 0; x < arraySize; x++) {  //Add characters to create the 26 character alphabet
 				for (int xx = 0; xx < 26; xx++) {
@@ -55,9 +55,9 @@ public class UseStringBuilder {
 			metrics[metricCounter] = stop;
 			averages[metricCounter++] += stop;
 
-			System.out.println("Testing time for String formatting");
+			//System.out.println("Testing time for String formatting");
 			start = System.currentTimeMillis();
-			for (int x = 0; x < arraySize; x++) { //Use format string to create the alphabet
+			for (int x = 0; x < 0; x++) { //Use format string to create the alphabet
 				String s = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z");
 			}
 			stop = System.currentTimeMillis() - start;

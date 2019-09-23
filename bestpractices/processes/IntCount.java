@@ -52,6 +52,10 @@ public class IntCount {
 			}
 		} while(x < (1024 * 1024));
 
+		try {
+			Thread.sleep(500);
+		} catch(InterruptedException ie){ }
+
 		os.write("exit".getBytes());
 		os.close();
 	}
