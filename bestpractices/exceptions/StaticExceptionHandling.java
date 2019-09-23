@@ -1,4 +1,4 @@
-
+package bestpractices.exceptions;
 
 public class StaticExceptionHandling extends Exception {
 
