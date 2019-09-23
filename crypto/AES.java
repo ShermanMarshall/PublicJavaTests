@@ -36,7 +36,7 @@ public class AES {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(KEY_SIZE_128);
             
-            SecretKey secretKey = new SecretKeySpec("ajidfjoasdjfasoasdj".getBytes(), "AES"); // keyGen.generateKey();
+            SecretKey secretKey = keyGen.generateKey();
             System.out.println(new String(secretKey.getEncoded()));
 
             final int AES_KEYLENGTH = 128;	
@@ -45,13 +45,11 @@ public class AES {
             SecureRandom prng = new SecureRandom();
             prng.nextBytes(iv);
             
-            iv = "1234567890abcdef".getBytes();
-
             Cipher aesCipherForEncryption = Cipher.getInstance("AES/CBC/PKCS5Padding"); 
 
             aesCipherForEncryption.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(iv));
 
-            strDataToEncrypt = "testing12testing"; //args[0];
+            strDataToEncrypt = args[0];
             byte[] byteDataToEncrypt = strDataToEncrypt.getBytes();
             byte[] byteCipherText = aesCipherForEncryption.doFinal(byteDataToEncrypt);
 
